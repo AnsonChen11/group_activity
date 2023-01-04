@@ -25,16 +25,49 @@ function fetchEventApiNew(city, activityID){
     .then(data => {
         if(data){
             data = data.data;
+            console.log(data)
+            let category = data.Class1;
+            let activityName = data.ActivityName;
+            let location = data.Location;
+            let address = data.Address;
+            let description = data.Description;
+            let pictureUrl1 = data.Picture.PictureUrl1;
+            let pictureUrl2 = data.Picture.PictureUrl2;
+            let pictureUrl3 = data.Picture.PictureUrl3;
+            let pictureDescription2 = data.Picture.PictureDescription2;
+            let pictureDescription3 = data.Picture.PictureDescription3;
+            let startTime = data.StartTime.split("T")[0];
+            let endTime = data.EndTime.split("T")[0];
+            let organizer = data.Organizer
+            if(category === undefined){
+                category = "特別活動"
+            }
+            if(location === "to see the official site"){
+                location = data.City
+            }
+            if(pictureUrl1 === undefined){
+                pictureUrl1 = "/static/image/picture404_2.svg"
+            }
+            if(pictureUrl2 === undefined){
+                pictureUrl2 = "/static/image/picture404_2.svg"
+            }
+            if(pictureUrl3 === undefined){
+                pictureUrl3 = "/static/image/picture404_2.svg"
+            }
+            if(pictureDescription2 === undefined | pictureDescription3 === undefined){
+                pictureDescription2 = ""
+                pictureDescription3 = ""
+            }
             let html = `
             <div class="top">
                 <div class="event_info">
-                    <div class="event_category">${data.Class1}</div>
-                    <div class="event_activityName">${data.ActivityName}</div>
-                    <div class="event_location">${data.Location}</div>
-                    <div class="event_description">${data.Description}</div>
+                    <div class="event_category">${category}</div>
+                    <div class="event_activityName">${activityName}</div>
+                    <div class="event_location">${location}</div>
+                    <div class="event_description">${description}</div>
                 </div>
                 <div class="event_img">
-                    <img src="${data.Picture.PictureUrl1}">
+                    <img src="${pictureUrl1}">
                 </div>
             </div>
             <div class="middle">
@@ -42,34 +75,34 @@ function fetchEventApiNew(city, activityID){
                     <div class="more_pics">
                         <div class="more_info">
                             <div class="more_img">
-                                <img src="${data.Picture.PictureUrl2}">
+                                <img src="${pictureUrl2}">
                             </div>
-                            <span>${data.Picture.PictureDescription2}</span>
+                            <span>${pictureDescription2}</span>
                         </div>
                         <div class="more_info">
                             <div class="more_img">
-                                <img src="${data.Picture.PictureUrl3}">
+                                <img src="${pictureUrl3}">
                             </div>
-                            <span>${data.Picture.PictureDescription3}</span>
+                            <span>${pictureDescription3}</span>
                         </div>
                     </div>
                     <div class="details_info">
                         <div class="details_info_container">
                             <div class="details_location">
                                 <h3>活動位址</h3>
-                                <h4>${data.Location} ${data.Address}</h4>
+                                <h4>${location} ${address}</h4>
                             </div>
                             <div class="details_startTime">
                                 <h3>開始時間</h3>
-                                <h4>${(data.StartTime).split("T")[0]}</h4>  
+                                <h4>${startTime}</h4>  
                             </div>
                             <div class="details_endTime">
                                 <h3>結束時間</h3>
-                                <h4>${(data.EndTime).split("T")[0]}</h4>
+                                <h4>${endTime}</h4>
                             </div>
                             <div class="details_organizer">
                                 <h3>主辦單位</h3>
-                                <h4>${data.Organizer}</h4>
+                                <h4>${organizer}</h4>
                             </div>
                         </div>
                         <div class="map_container">
